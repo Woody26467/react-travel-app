@@ -40,6 +40,10 @@ button {
   background-color: rgb(255, 255, 255);
 }
 
+.logo {
+  height: 39px;
+}
+
 /* Dashboard */
 .dashboard {
   width: 76%;
@@ -58,4 +62,34 @@ button {
 
 .dashboard .dashboard-info-container p {
   font-size: 16px;
+}
+
+/* header */
+header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-bottom: rgb(151, 151, 151) solid 1px;
+}
+
+header .header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+header .header-container .header-item-container {
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+}
+
+header .header-container .header-item-container p {
+  margin: 0 20px;
+}
+
+header .avatar {
+  height: 39px;
+  border-radius: 50%;
 }
