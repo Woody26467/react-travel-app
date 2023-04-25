@@ -24,6 +24,10 @@ p {
   font-size: 13px;
 }
 
+#link {
+  text-decoration: none;
+}
+
 button {
   background-color: rgb(68, 65, 248);
   border: none;
@@ -92,4 +96,55 @@ header .header-container .header-item-container p {
 header .avatar {
   height: 39px;
   border-radius: 50%;
+}
+
+/* Card */
+.card-container {
+  width: 300px;
+  height: 550px;
+  border-radius: 16px;
+  margin-bottom: 35px;
+  box-shadow: 0 10px 24px 10px rgba(0, 0, 0, 0.08);
+  background-color: rgb(247, 247, 247);
+}
+
+.card-container .img-container {
+  width: 300px;
+  height: 420px;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+}
+
+.card-container .img-container img {
+  width: 200%;
+}
+
+.card-container .info-container {
+  padding: 12px 18px;
+}
+
+/* Tag */
+.tag-container {
+  display: flex;
+}
+
+.tag {
+  background-color: rgb(230, 232, 236);
+  padding: 10px 15px;
+  margin-right: 4px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+/* Footer */
+footer {
+  background-color: rgb(20, 20, 22);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-container {
+  width: 74%;
+  padding: 40px;
 }
