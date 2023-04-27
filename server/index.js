@@ -2,7 +2,10 @@ const PORT = 8000
 const { default: axios } = require('axios')
 const express = require('express')
 require('dotenv').config()
+const cors = require('cors')
 const app = express()
+
+app.use(cors(000))
 
 // Default
 app.get('/', (req, res) => {

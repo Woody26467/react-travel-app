@@ -1,25 +1,29 @@
 import { Link } from 'react-router-dom'
 import Card from '../components/Card'
+import Modal from '../components/Modal'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 const Dashboard = () => {
-  const posts = [
-    {
-      id: 0,
-      title: 'Lofoten Islands',
-      address: {
-        line: 'House 45',
-        town: 'Flakstad',
-        region: 'Lofoten',
-        country: 'Norway',
-        coords: [13.61514, 68.148995],
-      },
-      photo:
-        'https://www.fjordtravel.no/wp-content/uploads/2019/01/Amazing-Lofoten-Islands-by-Shutterstock-Hurtigruten.jpg',
-      website: 'https://www.fjordtravel.no',
-      description: 'Amazing Lofoten Islands',
-      tags: ['nature', 'hiking', 'mountains'],
-    },
-  ]
+  const [posts, setPosts] = useState(null)
+  const [mode, setMode] = useState(null)
+  const fetchData = async () => {
+    const response = await axios.get('http://localhost:8000/posts')
+    const dataObject = response.data.data
+
+    const arrayOfData = Object.keys(dataObject).map(key => [
+      key,
+      dataObject[key],
+    ])
+    setPosts(arrayOfData)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  // console.log(posts?.[0][0])
+
   return (
     <div className='app'>
       <div className='dashboard'>
@@ -28,16 +32,19 @@ const Dashboard = () => {
             <h1>Adventure anywhere</h1>
             <p>Keep calm & travel on</p>
           </div>
-          <button>Add your adventure</button>
+          <button onClick={() => setMode('create')}>
+            Add your adventure
+          </button>
         </div>
         <div className='posts-container'>
           {posts?.map((post, _index) => (
-            <Link to={`/posts/${post.id}`} id='link' key={post.id}>
-              <Card post={post} />
+            <Link to={`/posts/${post[0]}`} id='link' key={post[0]}>
+              <Card post={post[1]} />
             </Link>
           ))}
         </div>
       </div>
+      {mode && <Modal mode={mode} />}
     </div>
   )
 }
