@@ -7,7 +7,7 @@ const Modal = ({ mode, setMode }) => {
   })
 
   console.log(form)
-  const createMode = true
+  const createMode = mode === 'create'
   const handleSubmit = e => {
     e.preventDefault()
   }
@@ -25,7 +25,7 @@ const Modal = ({ mode, setMode }) => {
   return (
     <div className='overlay'>
       <div className='modal'>
-        <form onSubmit={handleSubmit} action=''>
+        <form onSubmit={handleSubmit}>
           <div className='close-icon' onClick={() => setMode(null)}>
             X
           </div>
@@ -33,40 +33,51 @@ const Modal = ({ mode, setMode }) => {
           <h5>Upload a photo of where you have visited</h5>
           <p>Paste a url from the internet</p>
 
-          <div className='input-container'>
-            <label htmlFor='photo'>PHOTO</label>
-            <input
-              type='text'
-              id='photo'
-              name='photo'
-              required
-              value={form.photo || ''}
-              onChange={handleChange}
-            />
-          </div>
+          <div className='multi-input'>
+            <div className='image-preview'>
+              {form.photo && (
+                <img src={form.photo} alt='uploaded preview' />
+              )}
+            </div>
 
-          <div className='input-container'>
-            <label htmlFor='title'>TITLE</label>
-            <input
-              type='text'
-              id='title'
-              name='title'
-              required
-              value={form.title || ''}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className='input-container'>
-            <label htmlFor='website'>WEBSITE</label>
-            <input
-              type='text'
-              id='website'
-              name='website'
-              required
-              value={form.website || ''}
-              onChange={handleChange}
-            />
+            <div className='main-inputs'>
+              <div className='input-container'>
+                <label htmlFor='photo'>PHOTO</label>
+                <input
+                  type='text'
+                  id='photo'
+                  name='photo'
+                  placeholder='Photo URL goes here'
+                  required
+                  value={form.photo || ''}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='input-container'>
+                <label htmlFor='title'>TITLE</label>
+                <input
+                  type='text'
+                  id='title'
+                  name='title'
+                  placeholder='title of your post'
+                  required
+                  value={form.title || ''}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='input-container'>
+                <label htmlFor='website'>WEBSITE</label>
+                <input
+                  type='text'
+                  id='website'
+                  name='website'
+                  placeholder='website goes here'
+                  required
+                  value={form.website || ''}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
           </div>
 
           <div className='input-container'>
@@ -119,6 +130,45 @@ const Modal = ({ mode, setMode }) => {
               />
             </div>
           </div>
+          <div className='multi-input'>
+            <div className='input-container'>
+              <label htmlFor='longitude'>LONGITUDE</label>
+              <input
+                type='number'
+                id='longitude'
+                name='longitude'
+                required
+                value={form.longitude || ''}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className='input-container'>
+              <label htmlFor='latitude'>LATITUDE</label>
+              <input
+                type='number'
+                id='latitude'
+                name='latitude'
+                required
+                value={form.latitude || ''}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className='input-container'>
+              <label htmlFor='region'>REGION</label>
+              <input
+                type='text'
+                id='region'
+                name='region'
+                required
+                value={form.region || ''}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <br />
 
           <input type='submit' value='Submit for Review →' />
         </form>
