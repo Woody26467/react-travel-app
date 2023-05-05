@@ -45,9 +45,12 @@ const Modal = ({ mode, setMode, fetchData, currentPost }) => {
 
     try {
       if (createMode) {
-        const response = await axios.post('', {
-          data,
-        })
+        const response = await axios.post(
+          'http://localhost:8000/create',
+          {
+            data,
+          }
+        )
         const success = response.status === 200
 
         if (success) {
