@@ -1,20 +1,86 @@
 import { useState } from 'react'
+import { getTags } from '../helpers'
+import axios from 'axios'
 
-const Modal = ({ mode, setMode }) => {
-  console.log(mode)
+const Modal = ({ mode, setMode, fetchData, currentPost }) => {
+  console.log(currentPost)
   const [form, setForm] = useState({
-    line: '',
+    title: currentPost?.data.title || '',
+    description: currentPost?.data.description || '',
+    line: currentPost?.data.address.line || '',
+    town: currentPost?.data.address.town || '',
+    region: currentPost?.data.address.region || '',
+    country: currentPost?.data.address.country || '',
+    longitude: currentPost?.data.address.coords[0] || undefined,
+    latitude: currentPost?.data.address.coords[1] || undefined,
+    photo: currentPost?.data.photo || '',
+    website: currentPost?.data.website || '',
+    nature: currentPost?.data.tags.includes('nature') || false,
+    mountains: currentPost?.data.tags.includes('mountains') || false,
+    hiking: currentPost?.data.tags.includes('hiking') || false,
+    beach: currentPost?.data.tags.includes('beach') || false,
+    sun: currentPost?.data.tags.includes('sun') || false,
   })
 
   console.log(form)
   const createMode = mode === 'create'
-  const handleSubmit = e => {
+
+  const handleSubmit = async e => {
     e.preventDefault()
+
+    const data = {
+      title: form.title,
+      address: {
+        line: form.line,
+        town: form.town,
+        region: form.region,
+        country: form.country,
+        coords: [Number(form.longitude), Number(form.latitude)],
+      },
+      photo: form.photo,
+      website: form.website,
+      description: form.description,
+      tags: getTags(form),
+    }
+
+    try {
+      if (createMode) {
+        const response = await axios.post('', {
+          data,
+        })
+        const success = response.status === 200
+
+        if (success) {
+          setMode(null)
+          fetchData()
+        } else {
+          console.error(response)
+        }
+      } else {
+        const response = await axios.put(
+          `http://localhost:8000/edit/${currentPost.documentId}`,
+          {
+            data,
+          }
+        )
+        const success = response.status === 200
+
+        if (success) {
+          setMode(null)
+          fetchData()
+        } else {
+          console.error(response)
+        }
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const handleChange = e => {
     const name = e.target.name
-    const value = e.target.value
+    const value =
+      e.target.type === 'checkbox' ? e.target.checked : e.target.value
     console.log(name + ':' + value)
     setForm(prevState => ({
       ...prevState,
@@ -163,6 +229,59 @@ const Modal = ({ mode, setMode }) => {
                 name='region'
                 required
                 value={form.region || ''}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className='multi-input'>
+            <div className='input-container'>
+              <label htmlFor='nature'>Nature</label>
+              <input
+                type='checkbox'
+                id='nature-checkbox'
+                name='nature'
+                checked={form.nature}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='input-container'>
+              <label htmlFor='mountains'>Mountains</label>
+              <input
+                type='checkbox'
+                id='mountains-checkbox'
+                name='mountains'
+                checked={form.mountains}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='input-container'>
+              <label htmlFor='hiking'>Hiking</label>
+              <input
+                type='checkbox'
+                id='hiking-checkbox'
+                name='hiking'
+                checked={form.hiking}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='input-container'>
+              <label htmlFor='beach'>Beach</label>
+              <input
+                type='checkbox'
+                id='beach-checkbox'
+                name='beach'
+                checked={form.beach}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='input-container'>
+              <label htmlFor='sun'>Sun</label>
+              <input
+                type='checkbox'
+                id='sun-checkbox'
+                name='sun'
+                checked={form.sun}
                 onChange={handleChange}
               />
             </div>

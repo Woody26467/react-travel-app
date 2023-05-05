@@ -6,6 +6,7 @@ const cors = require('cors')
 const app = express()
 
 app.use(cors(000))
+app.use(express.json())
 
 // Default
 app.get('/', (req, res) => {
@@ -42,6 +43,31 @@ app.get('/posts/:postId', async (req, res) => {
     headers: {
       'X-Cassandra-Token': process.env.TOKEN,
     },
+  }
+
+  try {
+    const response = await axios(url, options)
+    res.status(200).json(response.data)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ message: err })
+  }
+})
+
+// Update post
+app.put('/edit/:postId', async (req, res) => {
+  const id = req.params.postId
+  const data = req.body.data
+
+  const url = `${process.env.ASTRA_URL}/${id}`
+
+  const options = {
+    method: 'PUT',
+    headers: {
+      Accepts: 'application/json',
+      'X-Cassandra-Token': process.env.TOKEN,
+    },
+    data,
   }
 
   try {

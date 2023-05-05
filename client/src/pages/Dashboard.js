@@ -44,7 +44,9 @@ const Dashboard = () => {
           ))}
         </div>
       </div>
-      {mode && <Modal mode={mode} setMode={setMode} />}
+      {mode && (
+        <Modal mode={mode} setMode={setMode} fetchData={fetchData} />
+      )}
     </div>
   )
 }

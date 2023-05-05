@@ -283,6 +283,7 @@ form input[type='submit'] {
 
 .post-page .image-container {
   width: 100%;
+  margin-bottom: 40px;
 }
 
 .post-page .image-container img {

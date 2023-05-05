@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Modal from '../components/Modal'
 import axios from 'axios'
@@ -11,18 +11,18 @@ const Post = () => {
 
   console.log(id)
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const response = await axios.get(
       `http://localhost:8000/posts/${id}`
     )
     setPost(response.data)
-  }
+  }, [id])
 
   console.log(post)
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [fetchData])
 
   return (
     <div className='post-page'>
@@ -44,13 +44,17 @@ const Post = () => {
 
         <div className='image-container'>
           {/* <Map/> */}
-          <img
-            src={post?.data.photo}
-            alt={`${post?.data.title} photo`}
-          />
+          <img src={post?.data.photo} alt={`${post?.data.title}`} />
         </div>
 
-        {mode && <Modal mode={mode} setMode={setMode} />}
+        {mode && (
+          <Modal
+            mode={mode}
+            setMode={setMode}
+            currentPost={post}
+            fetchData={fetchData}
+          />
+        )}
       </div>
     </div>
   )
