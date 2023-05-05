@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Modal from '../components/Modal'
 import axios from 'axios'
 
@@ -9,7 +9,7 @@ const Post = () => {
 
   const { id } = useParams()
 
-  console.log(id)
+  const navigate = useNavigate()
 
   const fetchData = useCallback(async () => {
     const response = await axios.get(
@@ -19,6 +19,14 @@ const Post = () => {
   }, [id])
 
   console.log(post)
+
+  const deletePost = async () => {
+    const response = await axios.delete(
+      `http://localhost:8000/delete/${id}`
+    )
+    const success = response.status === 200
+    if (success) navigate('/')
+  }
 
   useEffect(() => {
     fetchData()
@@ -37,7 +45,7 @@ const Post = () => {
             </p>
           </div>
           <div className='button-container'>
-            <button>X</button>
+            <button onClick={deletePost}>X</button>
             <button onClick={() => setMode('edit')}>✎</button>
           </div>
         </div>
