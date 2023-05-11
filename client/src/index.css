@@ -289,4 +289,39 @@ form input[type='submit'] {
 .post-page .image-container img {
   width: 100%;
   border-radius: 25px;
+  position: relative;
+  top: -250px;
+  left: 0;
+}
+
+.add-your-own {
+  width: 300px;
+  height: 550px;
+  border-radius: 16px;
+  margin-bottom: 35px;
+  border: dashed 2px rgb(231, 231, 231);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.map-container {
+  position: relative;
+  top: 20px;
+  left: 20px;
+  height: 250px;
+  width: 300px;
+  z-index: 1;
+  border-radius: 20px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.26);
+  overflow: hidden;
+}
+
+.map-container div {
+  width: 100%;
+  height: 100%;
+}
+
+.mapboxgl-compact {
+  display: none;
 }

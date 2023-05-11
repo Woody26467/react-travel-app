@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Modal from '../components/Modal'
 import axios from 'axios'
+import Map from '../components/Map'
 
 const Post = () => {
   const [mode, setMode] = useState(null)
@@ -51,7 +52,7 @@ const Post = () => {
         </div>
 
         <div className='image-container'>
-          {/* <Map/> */}
+          <Map coords={post?.data.address.coords} />
           <img src={post?.data.photo} alt={`${post?.data.title}`} />
         </div>
 
